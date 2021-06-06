@@ -17,10 +17,10 @@ class ErrorMessageHandler {
      */
     void showErrorMsg(String msg) {
         StringBuilder errorMsgBuilder = new StringBuilder();
-        errorMsgBuilder.append("| " + createTime() + " | ");
-        errorMsgBuilder.append("ERROR ");
+        errorMsgBuilder.append("ERROR | ");
         errorMsgBuilder.append(msg);
         errorMsgBuilder.append("\n");
+        errorMsgBuilder.append(createTime() + "\n");
         System.out.println(errorMsgBuilder);
     }
 

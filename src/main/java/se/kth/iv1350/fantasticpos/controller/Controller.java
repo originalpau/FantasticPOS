@@ -18,7 +18,6 @@ public class Controller {
     private InventoryRegistry inventoryRegistry;
     private AccountingRegistry accountingRegistry;
     private CashRegister cashRegister;
-    private List<SaleObserver> saleObservers = new ArrayList<>();
 
     /**
      * Creates a new instance.
@@ -38,7 +37,6 @@ public class Controller {
      */
     public void startSale() {
         this.currentSale = new Sale();
-        cashRegister.addRevenueObservers(saleObservers);
     }
 
     /**
@@ -89,8 +87,6 @@ public class Controller {
         inventoryRegistry.updateInventory(currentSale);
     }
 
-
-
     /**
      * The specified observer will be notified when a sale has been paid. There will be
      * notifications only for sales that are started after this method is called.
@@ -98,6 +94,6 @@ public class Controller {
      * @param obs The observer to notify.
      */
     public void addSaleObserver(SaleObserver obs) {
-        saleObservers.add(obs);
+        cashRegister.addSaleObservers(obs);
     }
 }

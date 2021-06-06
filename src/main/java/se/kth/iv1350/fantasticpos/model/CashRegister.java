@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class CashRegister {
-    private List<SaleObserver> revenueObservers = new ArrayList<>();
+    private List<SaleObserver> saleObservers = new ArrayList<>();
     private double totalRevenue = 0;
 
     /**
@@ -21,7 +21,7 @@ public class CashRegister {
     }
 
     private void notifyObservers(double totalPrice) {
-        for (SaleObserver obs : revenueObservers) {
+        for (SaleObserver obs : saleObservers) {
             obs.newSale(totalPrice);
         }
     }
@@ -31,7 +31,7 @@ public class CashRegister {
      *
      * @param observers The observers to notify.
      */
-    public void addRevenueObservers(List<SaleObserver> observers) {
-        revenueObservers.addAll(observers);
+    public void addSaleObservers(SaleObserver observers) {
+        saleObservers.add(observers);
     }
 }

@@ -43,12 +43,12 @@ public class TotalRevenueFileOutput implements SaleObserver {
     private String createLogMessage(List<Double> revenue) {
         Double totalRevenue = 0.0;
         StringBuilder sb = new StringBuilder();
-        sb.append("SALES REVENUE\n\n");
+        sb.append("SALES REVENUE\n");
         for (Double income : revenue) {
-            sb.append("Income: " + income.toString() + "SEK\n");
-            totalRevenue += income;
+            totalRevenue = income + totalRevenue;
+            sb.append("Income: " + income.toString() + " SEK\n");
         }
-        sb.append("\nTotal revenue: " + Math.round(totalRevenue * 100)/100.0 + "SEK\n");
+        sb.append("\nTotal revenue: " + Math.round(totalRevenue * 100)/100.0 + " SEK\n");
 
         return sb.toString();
     }

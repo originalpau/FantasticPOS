@@ -14,12 +14,15 @@ public class TotalRevenueView implements SaleObserver {
      */
     @Override
     public void newSale(double payment) {
-        this.totalRevenue += payment;
+        this.totalRevenue = payment + this.totalRevenue;
         printCurrentState();
     }
 
     private void printCurrentState() {
-        System.out.println("Cash Register Update");
-        System.out.println("TOTAL REVENUE: " + Math.round(this.totalRevenue * 100)/100.0 + " SEK\n");
+        System.out.println(" ___________________________");
+        System.out.println("| Cash Register Update      |");
+        System.out.println("| TOTAL REVENUE: " + Math.round(this.totalRevenue * 100)/100.0 +
+                " SEK |");
+        System.out.println("|___________________________|");
     }
 }

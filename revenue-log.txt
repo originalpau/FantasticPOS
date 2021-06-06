@@ -1,21 +1,11 @@
 SALES REVENUE
+Income: 212.91 SEK
 
-Income: 212.91SEK
-
-Total revenue: 212.91SEK
-
-SALES REVENUE
-
-Income: 212.91SEK
-Income: 68.9SEK
-
-Total revenue: 281.81SEK
+Total revenue: 212.91 SEK
 
 SALES REVENUE
+Income: 212.91 SEK
+Income: 40.0 SEK
 
-Income: 212.91SEK
-Income: 68.9SEK
-Income: 68.9SEK
-
-Total revenue: 350.71SEK
+Total revenue: 252.91 SEK
 

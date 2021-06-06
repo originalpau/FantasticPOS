@@ -23,6 +23,7 @@ public class View {
     final int FIRST_ITEM_ID = 3;
     final int SECOND_ITEM_ID = 2;
     final int SAME_SECOND_ITEM_ID = 2;
+    final int THIRD_ITEM_ID = 1;
     final int DATABASE_FAILURE_ID = 1337;
 
     /**
@@ -68,11 +69,12 @@ public class View {
         printNewSaleMessage();
 
         printNewScanningMessage();
-        scan(FIRST_ITEM_ID, ONE_ITEM_QUANTITY);
+        scan(THIRD_ITEM_ID, ONE_ITEM_QUANTITY);
         printEndScanningMessage();
 
         receiveTotalPrice();
-        contr.pay(100);
+
+        contr.pay(100.0);
 
         printEndSaleMessage();
     }
@@ -83,18 +85,19 @@ public class View {
     }
 
     private void printNewSaleMessage() {
-        System.out.println("\n======================== A NEW SALE HAS BEEN STARTED ================" +
-                "===============\n");
+        System.out.println("\n================ A NEW SALE HAS BEEN STARTED ================\n");
+    }
+
+    private void printEndSaleMessage() {
+        System.out.println("\n================ THE SALE HAS BEEN COMPLETED ================\n");
     }
 
     private void printNewScanningMessage() {
-        System.out.println("------------------------ Start of scanning Procedure ------------" +
-                "-------------------\n");
+        System.out.println("---------------- Start of scanning Procedure ----------------\n");
     }
 
     private void printEndScanningMessage() {
-        System.out.println("------------------------ End of scanning procedure --------------" +
-                "-------------------\n");
+        System.out.println("---------------- End of scanning procedure ------------------\n");
     }
 
     private void scan(int identifier, int quantity) {
@@ -110,8 +113,7 @@ public class View {
 
     private void scanInvalidIdentifier() {
         try {
-            System.out.println("Exception");
-            System.out.println("Trying to scan an invalid identifier.");
+            System.out.println("Trying to scan an invalid identifier...");
             saleInfo = contr.scanItem(INVALID_ITEM_ID, ONE_ITEM_QUANTITY);
             System.out.println(saleInfo);
             errorMsgHandler.showErrorMsg("Managed to scan a nonexistent identifier.");
@@ -124,8 +126,7 @@ public class View {
 
     private void databaseOutOfOrder() {
         try {
-            System.out.println("Exception");
-            System.out.println("Trying to scan when database can not be called.");
+            System.out.println("Trying to scan when database can not be called...");
             saleInfo = contr.scanItem(DATABASE_FAILURE_ID, ONE_ITEM_QUANTITY);
             System.out.println(saleInfo);
             errorMsgHandler.showErrorMsg("Managed to connect to the database when expecting failure.");
@@ -139,11 +140,6 @@ public class View {
     private void receiveTotalPrice() {
         double totalSum = contr.getTotalPrice();
         System.out.println("End Sale\nTOTAL SUM: " + totalSum + " SEK\n");
-    }
-
-    private void printEndSaleMessage() {
-        System.out.println("\n======================== THE SALE HAS BEEN COMPLETED ================" +
-                "================\n");
     }
 
 }

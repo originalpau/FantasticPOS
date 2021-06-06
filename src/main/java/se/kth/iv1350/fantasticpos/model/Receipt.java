@@ -143,7 +143,8 @@ public class Receipt {
     }
 
     private String createBarCode() {
-        return "            || |||||| ||| |||||||| |\n";
+        return "            || |||||| ||| |||||||| |\n" +
+               "            || |||||| ||| |||||||| |\n";
     }
 
     private String createNewReceiptLine() {
