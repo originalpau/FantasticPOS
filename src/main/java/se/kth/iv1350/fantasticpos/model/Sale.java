@@ -3,6 +3,8 @@ package se.kth.iv1350.fantasticpos.model;
 import se.kth.iv1350.fantasticpos.integration.ItemDTO;
 import se.kth.iv1350.fantasticpos.integration.Printer;
 
+import java.util.List;
+
 /**
  * One single sale made by one single customer and payed with one payment.
  */

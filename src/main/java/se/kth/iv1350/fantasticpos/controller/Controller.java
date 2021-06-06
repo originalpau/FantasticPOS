@@ -4,6 +4,10 @@ import se.kth.iv1350.fantasticpos.integration.*;
 import se.kth.iv1350.fantasticpos.model.CashRegister;
 import se.kth.iv1350.fantasticpos.model.Sale;
 import se.kth.iv1350.fantasticpos.model.SaleInfoDTO;
+import se.kth.iv1350.fantasticpos.model.SaleObserver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the application's only controller. All calls to the model pass through this class.
@@ -14,6 +18,7 @@ public class Controller {
     private InventoryRegistry inventoryRegistry;
     private AccountingRegistry accountingRegistry;
     private CashRegister cashRegister;
+    private List<SaleObserver> saleObservers = new ArrayList<>();
 
     /**
      * Creates a new instance.
@@ -33,6 +38,7 @@ public class Controller {
      */
     public void startSale() {
         this.currentSale = new Sale();
+        cashRegister.addRevenueObservers(saleObservers);
     }
 
     /**
@@ -61,7 +67,7 @@ public class Controller {
      *
      * @return the total price of the current sale.
      */
-    public double endSale() {
+    public double getTotalPrice() {
         double totalPrice = currentSale.getTotalPrice();
         return totalPrice;
     }
@@ -73,13 +79,25 @@ public class Controller {
      * Prints the receipt.
      * Updates accountingRegistry and inventoryRegistry with total sale information.
      *
-     * @param paidAmt The paid amount.
+     * @param paidAmount The paid amount.
      */
-    public void pay(double paidAmt) {
-        currentSale.pay(paidAmt);
+    public void pay(double paidAmount) {
+        currentSale.pay(paidAmount);
         cashRegister.addPayment(currentSale.getTotalPrice());
         currentSale.printReceipt(printer);
         accountingRegistry.sendAccountingRegistry(currentSale);
         inventoryRegistry.updateInventory(currentSale);
+    }
+
+
+
+    /**
+     * The specified observer will be notified when a sale has been paid. There will be
+     * notifications only for sales that are started after this method is called.
+     *
+     * @param obs The observer to notify.
+     */
+    public void addSaleObserver(SaleObserver obs) {
+        saleObservers.add(obs);
     }
 }

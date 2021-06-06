@@ -61,7 +61,7 @@ class ControllerTest {
     void testScanValidItemID() {
         try {
             instance.scanItem(VALID_ITEM_ID, ONE_ITEM_QUANTITY);
-            boolean totalPrice = instance.endSale() > 0;
+            boolean totalPrice = instance.getTotalPrice() > 0;
             assertTrue(totalPrice, "Total Price is less than or equal to zero " +
                     "when scanning for a valid item id.");
         } catch(NonexistentIdentifierException | OperationFailedException exc) {
@@ -89,7 +89,7 @@ class ControllerTest {
     void testEndSale() {
         try {
             instance.scanItem(VALID_ITEM_ID, ONE_ITEM_QUANTITY);
-            boolean totalPrice = instance.endSale() > 0;
+            boolean totalPrice = instance.getTotalPrice() > 0;
             assertTrue(totalPrice, "Wrong total price.");
         } catch (NonexistentIdentifierException | OperationFailedException exc) {
             fail("Got exception.");

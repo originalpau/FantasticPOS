@@ -23,9 +23,9 @@ public class SaleInfoDTO {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Scanned Item\n");
+        sb.append("Scanning item...\n");
         sb.append(this.latestRegisteredItem + "\n");
-        sb.append(">> Running total incl. VAT: " + this.runningTotal+" SEK\n");
+        sb.append("Running total: " + this.runningTotal+" SEK\n");
         return sb.toString();
     }
 

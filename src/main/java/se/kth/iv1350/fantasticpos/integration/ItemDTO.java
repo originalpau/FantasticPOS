@@ -60,9 +60,8 @@ public final class ItemDTO {
 
     @Override
     public String toString() {
-        String string = "name: " + name + ", " +
-                "itemIdentifier: " + itemIdentifier + ", " +
-                "price: " + price + ", " +
+        String string = "Name: " + name + ", " +
+                "Price: " + price + ", " +
                 "VATRate: " + VATRate;
         return string;
     }

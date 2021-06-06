@@ -14,6 +14,10 @@ public class LogHandler {
     private static final String LOG_FILE_NAME = "sale-log.txt";
     private PrintWriter logFile;
 
+    /**
+     * Creates a new instance.
+     * @throws IOException if unable to log.
+     */
     public LogHandler() throws IOException {
         logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME), true);
     }
@@ -25,8 +29,8 @@ public class LogHandler {
      */
     public void logException(Exception exception) {
         StringBuilder logMsgBuilder = new StringBuilder();
-        logMsgBuilder.append(createTime());
-        logMsgBuilder.append(", Exception was thrown: ");
+        logMsgBuilder.append("| " + createTime() + " |");
+        logMsgBuilder.append("Exception was thrown: ");
         logMsgBuilder.append(exception.getMessage());
         logFile.println(logMsgBuilder);
         exception.printStackTrace(logFile);
@@ -34,7 +38,8 @@ public class LogHandler {
 
     private String createTime() {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
-        return now.format(formatter);
+        String dateTimePattern = "uuuu/MM/dd HH:mm:ss";
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(dateTimePattern);
+        return format.format(now);
     }
 }

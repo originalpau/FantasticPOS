@@ -3,6 +3,7 @@ package se.kth.iv1350.fantasticpos.startup;
 import se.kth.iv1350.fantasticpos.controller.Controller;
 import se.kth.iv1350.fantasticpos.integration.Printer;
 import se.kth.iv1350.fantasticpos.integration.RegistryCreator;
+import se.kth.iv1350.fantasticpos.integration.filehandling.TotalRevenueFileOutput;
 import se.kth.iv1350.fantasticpos.view.View;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class Main {
             RegistryCreator creator = new RegistryCreator();
             Printer printer = new Printer();
             Controller contr = new Controller(creator, printer);
+            contr.addSaleObserver(new TotalRevenueFileOutput());
             new View(contr).runSampleExecution();
         } catch (IOException exc) {
             System.out.println("Unable to start the application");
