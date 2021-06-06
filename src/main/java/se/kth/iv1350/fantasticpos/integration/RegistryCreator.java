@@ -1,7 +1,7 @@
 package se.kth.iv1350.fantasticpos.integration;
 
 /**
- * This class is responsible for instantiating all registries.
+ * A Singleton that is responsible for instantiating all registers.
  */
 
 public class RegistryCreator {
@@ -12,9 +12,9 @@ public class RegistryCreator {
      * Creates a new instance of RegistryCreator.
      * A new instance of InventoryRegistry and AccountingRegistry is also created.
      */
-    public RegistryCreator() {
-        inventoryRegistry =  new InventoryRegistry();
-        accountingRegistry = new AccountingRegistry();
+     RegistryCreator() {
+        inventoryRegistry =  InventoryRegistry.getInventoryRegistry();
+        accountingRegistry = AccountingRegistry.getAccountingRegistry();
     }
 
     /**

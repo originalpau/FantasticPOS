@@ -6,11 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is an Accounting Registry Handler, acting as a
+ * A Singleton that is an Accounting Registry Handler, acting as a
  * middleware to the external data base Accounting Registry.
  */
 public class AccountingRegistry {
+    private static final AccountingRegistry ACCOUNTING_REGISTRY = new AccountingRegistry();
     private List<Sale> sales = new ArrayList<>();
+
+    private AccountingRegistry() {}
+
+    public static AccountingRegistry getAccountingRegistry() {
+        return ACCOUNTING_REGISTRY;
+    }
 
     /**
      * Saves the specified sale to be sent to the AccountingRegistry.

@@ -34,10 +34,13 @@ public class ErrorMessageHandlerTest {
         String errorMsg = "this is the message";
         ErrorMessageHandler instance = new ErrorMessageHandler();
         instance.showErrorMsg(errorMsg);
-        String expResultMsg = ", ERROR: " + errorMsg;
+        String expResultMsg = "ERROR | " + errorMsg;
+
+        String europeanDateTimePattern = "dd MMM uuuu HH:mm:ss";
+        DateTimeFormatter europeanFormatter = DateTimeFormatter.ofPattern(europeanDateTimePattern);
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
-        String expResultTime = now.format(formatter);
+        String expResultTime = europeanFormatter.format(now);
+
         String result = outContent.toString();
         assertTrue(result.contains(expResultMsg), "Wrong printout.");
         assertTrue(result.contains(expResultTime), "Wrong printout.");

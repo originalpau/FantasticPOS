@@ -22,12 +22,11 @@ public class Controller {
     /**
      * Creates a new instance.
      *
-     * @param creator Used to get all classes that handle database calls.
      * @param printer Interface to printer.
      */
-    public Controller(RegistryCreator creator, Printer printer) {
-        this.inventoryRegistry = creator.getInventoryRegistry();
-        this.accountingRegistry = creator.getAccountingRegistry();
+    public Controller(Printer printer) {
+        this.inventoryRegistry = InventoryRegistry.getInventoryRegistry();
+        this.accountingRegistry = AccountingRegistry.getAccountingRegistry();
         this.printer = printer;
         this.cashRegister = new CashRegister();
     }

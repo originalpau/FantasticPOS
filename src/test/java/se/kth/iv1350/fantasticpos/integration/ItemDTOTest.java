@@ -130,8 +130,7 @@ class ItemDTOTest {
         double price = 5.0;
         double VATRate = 0.12;
         ItemDTO instance = new ItemDTO(name, itemIdentifier, price, VATRate);
-        String expResult = "name: " + name + ", itemIdentifier: " + itemIdentifier +
-                ", price: " + price + ", VATRate: " + VATRate;
+        String expResult = "Name: " + name  + ", Price: " + price + ", VATRate: " + VATRate;
         String result = instance.toString();
         assertEquals(expResult, result, "Wrong string returned by toString");
     }
@@ -143,8 +142,7 @@ class ItemDTOTest {
         double price = 5.0;
         double VATRate = 0.12;
         ItemDTO instance = new ItemDTO(name, itemIdentifier, price, VATRate);
-        String expResult = "name: " + name + ", itemIdentifier: " + itemIdentifier +
-                ", price: " + price + ", VATRate: " + VATRate;
+        String expResult = "Name: " + name + ", Price: " + price + ", VATRate: " + VATRate;
         String result = instance.toString();
         assertEquals(expResult, result, "Wrong string returned by toString");
     }
@@ -156,8 +154,7 @@ class ItemDTOTest {
         double price = 5.0;
         double VATRate = 0.12;
         ItemDTO instance = new ItemDTO(name, itemIdentifier, price, VATRate);
-        String expResult = "name: " + name + ", itemIdentifier: " + itemIdentifier +
-                ", price: " + price + ", VATRate: " + VATRate;
+        String expResult = "Name: " + name  + ", Price: " + price + ", VATRate: " + VATRate;
         String result = instance.toString();
         assertEquals(expResult, result, "Wrong string returned by toString");
     }

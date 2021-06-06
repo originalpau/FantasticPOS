@@ -19,8 +19,7 @@ public class ViewTest {
     @BeforeEach
     public void setUp() throws IOException {
         Printer printer = new Printer();
-        RegistryCreator creator = new RegistryCreator();
-        Controller contr = new Controller(creator, printer);
+        Controller contr = new Controller(printer);
         instanceToTest = new View(contr);
 
         printoutBuffer = new ByteArrayOutputStream();

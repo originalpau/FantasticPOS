@@ -25,9 +25,8 @@ class ControllerTest {
 
     @BeforeEach
     public void setup() {
-        creator = new RegistryCreator();
         Printer printer = new Printer();
-        instance = new Controller(creator, printer);
+        instance = new Controller(printer);
         instance.startSale();
 
         originalSysOut = System.out;

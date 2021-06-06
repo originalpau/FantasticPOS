@@ -21,9 +21,9 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            RegistryCreator creator = new RegistryCreator();
+            //RegistryCreator creator = new RegistryCreator();
             Printer printer = new Printer();
-            Controller contr = new Controller(creator, printer);
+            Controller contr = new Controller(printer);
             contr.addSaleObserver(new TotalRevenueFileOutput());
             new View(contr).runSampleExecution();
         } catch (IOException exc) {

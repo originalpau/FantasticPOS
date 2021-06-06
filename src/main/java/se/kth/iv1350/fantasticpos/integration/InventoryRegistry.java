@@ -6,16 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains all items in store that can be purchased. Acting as a
+ * This class contains all items in store that can be purchased. Acting as a
  * middleware to the external data base Inventory Registry.
  */
 public class InventoryRegistry {
+    private static final InventoryRegistry INVENTORY_REGISTRY = new InventoryRegistry();
     private final int DATABASE_FAILURE = 1337;
-    private List<ItemDTO> items = new ArrayList<>();
-    private List<Sale> sales = new ArrayList<>();
+    private final List<ItemDTO> items = new ArrayList<>();
+    private final List<Sale> sales = new ArrayList<>();
 
-    InventoryRegistry() {
+    private InventoryRegistry() {
         addItems();
+    }
+
+    public static InventoryRegistry getInventoryRegistry() {
+        return INVENTORY_REGISTRY;
     }
 
     /**

@@ -42,7 +42,7 @@ public class View {
      */
     public void runSampleExecution() {
         firstSale();
-        secondSale();
+        //secondSale();
     }
 
     private void firstSale() {
