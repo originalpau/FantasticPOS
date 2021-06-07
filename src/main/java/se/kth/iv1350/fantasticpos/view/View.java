@@ -4,7 +4,6 @@ import se.kth.iv1350.fantasticpos.controller.Controller;
 import se.kth.iv1350.fantasticpos.controller.OperationFailedException;
 import se.kth.iv1350.fantasticpos.integration.NonexistentIdentifierException;
 import se.kth.iv1350.fantasticpos.model.SaleInfoDTO;
-import se.kth.iv1350.fantasticpos.util.LoggerClient;
 
 import java.io.IOException;
 
@@ -45,37 +44,45 @@ public class View {
     }
 
     private void firstSale() {
-        contr.startSale();
-        printNewSaleMessage();
+        try {
+            contr.startSale();
+            printNewSaleMessage();
 
-        printNewScanningMessage();
-        scan(FIRST_ITEM_ID, ONE_ITEM_QUANTITY);
-        scan(SECOND_ITEM_ID, ONE_ITEM_QUANTITY);
-        scan(SAME_SECOND_ITEM_ID, ONE_ITEM_QUANTITY);
-        scanInvalidIdentifier();
-        databaseOutOfOrder();
-        printEndScanningMessage();
+            printNewScanningMessage();
+            scan(FIRST_ITEM_ID, ONE_ITEM_QUANTITY);
+            scan(SECOND_ITEM_ID, ONE_ITEM_QUANTITY);
+            scan(SAME_SECOND_ITEM_ID, ONE_ITEM_QUANTITY);
+            scanInvalidIdentifier();
+            databaseOutOfOrder();
+            printEndScanningMessage();
 
-        receiveTotalPrice();
+            receiveTotalPrice();
 
-        contr.pay(300.0);
+            contr.pay(300.0);
 
-        printEndSaleMessage();
+            printEndSaleMessage();
+        } catch (Exception exc) {
+            logger.writeToConsoleAndFile("Operation failed.", exc);
+        }
     }
 
     private void secondSale() {
-        contr.startSale();
-        printNewSaleMessage();
+        try {
+            contr.startSale();
+            printNewSaleMessage();
 
-        printNewScanningMessage();
-        scan(THIRD_ITEM_ID, ONE_ITEM_QUANTITY);
-        printEndScanningMessage();
+            printNewScanningMessage();
+            scan(THIRD_ITEM_ID, ONE_ITEM_QUANTITY);
+            printEndScanningMessage();
 
-        receiveTotalPrice();
+            receiveTotalPrice();
 
-        contr.pay(100.0);
+            contr.pay(100.0);
 
-        printEndSaleMessage();
+            printEndSaleMessage();
+        } catch (Exception exc) {
+            logger.writeToConsoleAndFile("Operation failed.", exc);
+        }
     }
 
     //Group of private methods that are called during a sale.
@@ -102,9 +109,9 @@ public class View {
             System.out.println(saleInfo);
         } catch (NonexistentIdentifierException exc) {
             logger.printExceptionToConsole(exc);
-        } catch (Exception exc) {
-            logger.printMessageToConsole("Failed to scan, please try again.");
+        } catch (OperationFailedException exc) {
             logger.logExceptionToFile(exc);
+            logger.printExceptionToConsole(exc);
         }
     }
 
@@ -117,8 +124,7 @@ public class View {
         } catch (NonexistentIdentifierException exc) {
             logger.printMessageToConsole("Correctly failed to scan a nonexistent identifier.");
         } catch (OperationFailedException exc) {
-            logger.printMessageToConsole("Wrong exception was thrown.");
-            logger.logExceptionToFile(exc);
+            logger.writeToConsoleAndFile("Wrong exception was thrown.", exc);
         }
     }
 
@@ -131,8 +137,7 @@ public class View {
         } catch (OperationFailedException exc) {
             logger.printMessageToConsole("Correctly failed to connect to database.");
         } catch (NonexistentIdentifierException exc) {
-            logger.printMessageToConsole("Wrong exception was thrown.");
-            logger.logExceptionToFile(exc);
+            logger.writeToConsoleAndFile("Wrong exception was thrown.", exc);
         }
     }
 
