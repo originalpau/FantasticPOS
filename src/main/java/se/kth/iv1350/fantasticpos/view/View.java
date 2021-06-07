@@ -4,8 +4,7 @@ import se.kth.iv1350.fantasticpos.controller.Controller;
 import se.kth.iv1350.fantasticpos.controller.OperationFailedException;
 import se.kth.iv1350.fantasticpos.integration.NonexistentIdentifierException;
 import se.kth.iv1350.fantasticpos.model.SaleInfoDTO;
-import se.kth.iv1350.fantasticpos.util.LogHandler;
-import se.kth.iv1350.fantasticpos.util.Logger;
+import se.kth.iv1350.fantasticpos.util.LoggerClient;
 
 import java.io.IOException;
 
@@ -15,7 +14,7 @@ import java.io.IOException;
  */
 public class View {
     private Controller contr;
-    private Logger logger;
+    private LoggerClient logger;
 
     SaleInfoDTO saleInfo;
     final int ONE_ITEM_QUANTITY = 1;
@@ -34,6 +33,7 @@ public class View {
     public View(Controller contr) throws IOException {
         this.contr = contr;
         contr.addSaleObserver(new TotalRevenueView());
+        logger = new LoggerClient();
     }
 
     /**
@@ -78,7 +78,7 @@ public class View {
         printEndSaleMessage();
     }
 
-    //Groups of private methods that are called during a sale.
+    //Group of private methods that are called during a sale.
 
     private void printNewSaleMessage() {
         System.out.println("\n================ A NEW SALE HAS BEEN STARTED ================\n");
@@ -101,10 +101,10 @@ public class View {
             saleInfo = contr.scanItem(identifier, quantity);
             System.out.println(saleInfo);
         } catch (NonexistentIdentifierException exc) {
-            printExceptionToConsole(exc);
+            logger.printExceptionToConsole(exc);
         } catch (Exception exc) {
-            printMessageToConsole("Failed to scan, please try again.");
-            logExceptionToFile(exc);
+            logger.printMessageToConsole("Failed to scan, please try again.");
+            logger.logExceptionToFile(exc);
         }
     }
 
@@ -113,12 +113,12 @@ public class View {
             System.out.println("Trying to scan an invalid identifier...");
             saleInfo = contr.scanItem(INVALID_ITEM_ID, ONE_ITEM_QUANTITY);
             System.out.println(saleInfo);
-            writeMessageToConsoleAndFile("Managed to scan a nonexistent identifier.");
+            logger.writeMessageToConsoleAndFile("Managed to scan a nonexistent identifier.");
         } catch (NonexistentIdentifierException exc) {
-            printMessageToConsole("Correctly failed to scan a nonexistent identifier.");
+            logger.printMessageToConsole("Correctly failed to scan a nonexistent identifier.");
         } catch (OperationFailedException exc) {
-            printMessageToConsole("Wrong exception was thrown.");
-            logExceptionToFile(exc);
+            logger.printMessageToConsole("Wrong exception was thrown.");
+            logger.logExceptionToFile(exc);
         }
     }
 
@@ -127,56 +127,17 @@ public class View {
             System.out.println("Trying to scan when database can not be called...");
             saleInfo = contr.scanItem(DATABASE_FAILURE_ID, ONE_ITEM_QUANTITY);
             System.out.println(saleInfo);
-            writeMessageToConsoleAndFile("Managed to connect to the database when expecting failure.");
+            logger.writeMessageToConsoleAndFile("Managed to connect to the database when expecting failure.");
         } catch (OperationFailedException exc) {
-            printMessageToConsole("Correctly failed to connect to database.");
+            logger.printMessageToConsole("Correctly failed to connect to database.");
         } catch (NonexistentIdentifierException exc) {
-            printMessageToConsole("Wrong exception was thrown.");
-            logExceptionToFile(exc);
+            logger.printMessageToConsole("Wrong exception was thrown.");
+            logger.logExceptionToFile(exc);
         }
     }
 
     private void receiveTotalPrice() {
         double totalSum = contr.getTotalPrice();
         System.out.println("End Sale\nTOTAL SUM: " + totalSum + " SEK\n");
-    }
-
-    //Group of private methods that integrates with the Logger interface.
-
-    private void setLogger (Logger logger) {
-        this.logger = logger;
-    }
-
-    private void logExceptionToFile (Exception exception) {
-        try {
-            setLogger(new LogHandler());
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to log.");
-        }
-        logger.logException(exception);
-    }
-
-    private void logMessageToFile (String message) {
-        try {
-            setLogger(new LogHandler());
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to log.");
-        }
-        logger.printMessage(message);
-    }
-
-    private void printExceptionToConsole (Exception exception) {
-        setLogger(new ErrorMessageHandler());
-        logger.logException(exception);
-    }
-
-    private void printMessageToConsole (String message) {
-        setLogger(new ErrorMessageHandler());
-        logger.printMessage(message);
-    }
-
-    private void writeMessageToConsoleAndFile (String message) {
-        printMessageToConsole(message);
-        logMessageToFile(message);
     }
 }

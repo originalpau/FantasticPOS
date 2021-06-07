@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * This class is responsible for showing error messages to the user.
  */
-class ErrorMessageHandler implements Logger {
+public class ErrorMessageHandler implements Logger {
 
     /**
      * Displays the specified error message.

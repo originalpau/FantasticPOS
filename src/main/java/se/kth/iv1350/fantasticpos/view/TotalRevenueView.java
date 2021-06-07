@@ -5,7 +5,7 @@ import se.kth.iv1350.fantasticpos.model.SaleObserver;
 /**
  * Prints the total revenue on the console. Informs about revenue to the user.
  */
-public class TotalRevenueView implements SaleObserver {
+class TotalRevenueView implements SaleObserver {
     private double totalRevenue = 0;
 
     /**
