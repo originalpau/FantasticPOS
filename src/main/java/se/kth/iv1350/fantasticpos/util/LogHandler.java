@@ -10,7 +10,7 @@ import java.time.format.FormatStyle;
 /**
  * This class is responsible for the log.
  */
-public class LogHandler {
+public class LogHandler implements Logger{
     private static final String LOG_FILE_NAME = "sale-log.txt";
     private PrintWriter logFile;
 
@@ -27,7 +27,8 @@ public class LogHandler {
      *
      * @param exception The exception that shall be logged.
      */
-    public void logException(Exception exception) {
+    @Override
+    public void logException (Exception exception) {
         StringBuilder logMsgBuilder = new StringBuilder();
         logMsgBuilder.append("| " + createTime() + " |");
         logMsgBuilder.append("Exception was thrown: ");
@@ -41,5 +42,16 @@ public class LogHandler {
         String dateTimePattern = "uuuu/MM/dd HH:mm:ss";
         DateTimeFormatter format = DateTimeFormatter.ofPattern(dateTimePattern);
         return format.format(now);
+    }
+
+    /**
+     * Writes the specific message to the log.
+     *
+     * @param message The message that will be logged.
+     */
+    @Override
+    public void printMessage (String message) {
+        String msg = ("ERROR | " + message + "\n" + createTime() + "\n");
+        logFile.println(msg);
     }
 }
