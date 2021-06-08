@@ -1,3 +1,9 @@
-ERROR | The message to log
-2021/06/07 12:52:32
-
+| 2021/06/07 19:51:07 |Exception was thrown: Unable to find -1 because it does not exist in the inventory catalog.
+se.kth.iv1350.fantasticpos.integration.NonexistentIdentifierException: Unable to find -1 because it does not exist in the inventory catalog.
+	at se.kth.iv1350.fantasticpos.integration.InventoryRegistry.getItemByIdentifier(InventoryRegistry.java:59)
+	at se.kth.iv1350.fantasticpos.integration.InventoryRegistry.findItem(InventoryRegistry.java:37)
+	at se.kth.iv1350.fantasticpos.controller.Controller.scanItem(Controller.java:54)
+	at se.kth.iv1350.fantasticpos.view.View.scanInvalidIdentifier(View.java:117)
+	at se.kth.iv1350.fantasticpos.view.View.firstSale(View.java:56)
+	at se.kth.iv1350.fantasticpos.view.View.runSampleExecution(View.java:43)
+	at se.kth.iv1350.fantasticpos.startup.Main.main(Main.java:28)

@@ -8,18 +8,27 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 /**
- * This class is responsible for the log.
+ * A Singleton that is responsible for the log.
  */
 public class LogHandler implements Logger{
+    private final static LogHandler LOG_HANDLER = new LogHandler();
     private static final String LOG_FILE_NAME = "sale-log.txt";
     private PrintWriter logFile;
 
     /**
-     * Creates a new instance.
-     * @throws IOException if unable to log.
+     * @return The only LogHandler.
      */
-    public LogHandler() throws IOException {
-        logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME), true);
+    public static LogHandler getLogHandler() {
+        return LOG_HANDLER;
+    }
+
+    private LogHandler() {
+        try {
+            logFile = new PrintWriter(new FileWriter(LOG_FILE_NAME), true);
+        } catch (IOException e) {
+            System.out.println("Failed to create new log.");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -30,9 +39,10 @@ public class LogHandler implements Logger{
     @Override
     public void logException (Exception exception) {
         StringBuilder logMsgBuilder = new StringBuilder();
-        logMsgBuilder.append("| " + createTime() + " |");
+        logMsgBuilder.append("|" + createTime() + " | ");
         logMsgBuilder.append("Exception was thrown: ");
         logMsgBuilder.append(exception.getMessage());
+        logMsgBuilder.append("\n");
         logFile.println(logMsgBuilder);
         exception.printStackTrace(logFile);
     }

@@ -20,12 +20,7 @@ public class LogHandlerTest {
 
     @BeforeEach
     public void createInstance() {
-        try {
-            instance = new LogHandler();
-        } catch (IOException ex) {
-            fail("Could not create log handler");
-            ex.printStackTrace();
-        }
+        instance = LogHandler.getLogHandler();
     }
 
     @AfterEach

@@ -1,5 +1,7 @@
 package se.kth.iv1350.fantasticpos.model;
 
+import java.io.IOException;
+
 /**
  * A listener interface for receiving notifications about the sale. The class that is interested
  * in such notifications implements this interface, and the object created with that class is

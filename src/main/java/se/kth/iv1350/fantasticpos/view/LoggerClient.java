@@ -3,8 +3,6 @@ package se.kth.iv1350.fantasticpos.view;
 import se.kth.iv1350.fantasticpos.util.LogHandler;
 import se.kth.iv1350.fantasticpos.util.Logger;
 
-import java.io.IOException;
-
 /**
  * A client for the logger. Prints log messages to the specified logger.
  */
@@ -16,11 +14,7 @@ class LoggerClient {
      * @param exception The exception that will be logged.
      */
     void logExceptionToFile (Exception exception) {
-        try {
-            setLogger(new LogHandler());
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to log.");
-        }
+        setLogger(LogHandler.getLogHandler());
         logger.logException(exception);
     }
 
@@ -62,11 +56,7 @@ class LoggerClient {
     }
 
     private void logMessageToFile (String message) {
-        try {
-            setLogger(new LogHandler());
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to log.");
-        }
+        setLogger(LogHandler.getLogHandler());
         logger.printMessage(message);
     }
 
