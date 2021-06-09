@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
-    private RegistryCreator creator;
     private Controller instance;
     private final int VALID_ITEM_ID = 1;
     private final int ONE_ITEM_QUANTITY = 1;
@@ -36,7 +35,6 @@ class ControllerTest {
 
     @AfterEach
     public void tearDown() {
-        creator = null;
         instance = null;
 
         outContent = null;
@@ -85,6 +83,21 @@ class ControllerTest {
     }
 
     @Test
+    void testScanItemDatabaseFailure() {
+        final int DATABASE_FAILURE = 1337;
+        try {
+            instance.scanItem(DATABASE_FAILURE, ONE_ITEM_QUANTITY);
+            fail("Managed to scan when there is no database connection.");
+        } catch (NonexistentIdentifierException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        } catch(OperationFailedException e) {
+            assertTrue(e.getMessage().contains("Could not scan the identifier."),
+                    "Wrong exception message" + e.getMessage());
+        }
+    }
+
+    @Test
     void testEndSale() {
         try {
             instance.scanItem(VALID_ITEM_ID, ONE_ITEM_QUANTITY);
@@ -107,12 +120,14 @@ class ControllerTest {
         double paidAmt = 100;
         instance.pay(paidAmt);
 
+        String expTotalPrice = String.format("%-15s %31s", "Total", instance.getTotalPrice());
         String expResultTax = "VAT";
         String expResultChange = "Change";
         LocalDateTime saleTime = LocalDateTime.now();
 
         String result = outContent.toString();
 
+        assertTrue(result.contains(expTotalPrice), "Wrong Total Price");
         assertTrue(result.contains(expResultChange), "Wrong change.");
         assertTrue(result.contains(expResultTax),"Wrong VAT.");
         assertTrue(result.contains(Integer.toString(saleTime.getYear())), "Wrong rental year.");

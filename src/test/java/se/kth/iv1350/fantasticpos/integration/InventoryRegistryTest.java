@@ -9,9 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class InventoryRegistryTest {
     private RegistryCreator creator;
     private InventoryRegistry instance;
-    private final int BANANA_ID = 100;
-    private final int INVALID_ID = -1;
-    private final int DATABASE_FAILURE = 1337;
 
     @BeforeEach
     public void setUp() {
@@ -28,6 +25,7 @@ class InventoryRegistryTest {
     @Test
     void testFindItem() throws NonexistentIdentifierException {
         ItemDTO expResult = new ItemDTO("Banana", 100, 5, 0.12);
+        int BANANA_ID = 100;
         ItemDTO result = instance.findItem(BANANA_ID);
         assertEquals(expResult, result, "Available item was not found");
     }
@@ -35,6 +33,7 @@ class InventoryRegistryTest {
     @Test
     void testFindInvalidItemID() {
         try {
+            int INVALID_ID = -1;
             instance.findItem(INVALID_ID);
             fail("Nonexistent item was found.");
         } catch (NonexistentIdentifierException exc){
@@ -47,6 +46,7 @@ class InventoryRegistryTest {
     @Test
     void testDatabaseFailure() {
         try {
+            int DATABASE_FAILURE = 1337;
             instance.findItem(DATABASE_FAILURE);
             fail("Could connect to unavailable database.");
         } catch(NonexistentIdentifierException exc) {

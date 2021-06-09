@@ -6,6 +6,8 @@ import se.kth.iv1350.fantasticpos.util.LogHandler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Prints the total revenue to a file.
@@ -29,7 +31,8 @@ public class TotalRevenueFileOutput extends AbstractTotalRevenue {
     @Override
     protected void doShowTotalRevenue(Double totalRevenue) {
         String revenue = "SALES REVENUE\n" +
-                "Total revenue: " + Math.round(totalRevenue * 100) / 100.0 + " SEK\n";
+                "Total revenue: " + Math.round(totalRevenue * 100) / 100.0 + " SEK\n" +
+                createTime() + "\n";
         logFile.println(revenue);
     }
 
@@ -37,5 +40,12 @@ public class TotalRevenueFileOutput extends AbstractTotalRevenue {
     protected void handleErrors(Exception e) {
         System.out.println("Failed to log total revenue.");
         LogHandler.getLogHandler().logException(e);
+    }
+
+    private String createTime() {
+        String europeanDateTimePattern = "dd MMMM uuuu, HH:mm";
+        DateTimeFormatter europeanFormatter = DateTimeFormatter.ofPattern(europeanDateTimePattern);
+        LocalDateTime now = LocalDateTime.now();
+        return europeanFormatter.format(now);
     }
 }

@@ -40,7 +40,31 @@ public class ViewTest {
     public void testRunFakeExecution() {
         instanceToTest.runSampleExecution();
         String printout = printoutBuffer.toString();
-        String expectedOutput = "STARTED";
-        assertTrue(printout.contains(expectedOutput), "UI did not start correctly.");
+        String expectedSaleStart = "STARTED";
+        String expScanStart = "---------------- Start of scanning Procedure ----------------";
+        String expScanEnd = "---------------- End of scanning procedure ------------------\n";
+        String expSaleInfo = "Scanning item...";
+        String expSaleEnd = "End Sale\nTOTAL SUM: ";
+        String receipt = createStoreInfo();
+
+        assertTrue(printout.contains(expectedSaleStart), "UI did not start correctly.");
+        assertTrue(printout.contains(expScanStart), "UI did not start correctly.");
+        assertTrue(printout.contains(expScanEnd), "UI did not start correctly.");
+        assertTrue(printout.contains(expSaleInfo), "UI did not start correctly.");
+        assertTrue(printout.contains(expSaleEnd), "UI did not start correctly.");
+        assertTrue(printout.contains(receipt), "UI did not start correctly.");
+    }
+
+    private String createStoreInfo() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("\n%-12s %-35s", "", "Paulina Huang's Store"));
+        endSection(builder);
+        builder.append(String.format("%-6s %-40s", "", "KTH Royal Institute of Technology"));
+        endSection(builder);
+        return builder.toString();
+    }
+
+    private void endSection(StringBuilder builder) {
+        builder.append("\n");
     }
 }

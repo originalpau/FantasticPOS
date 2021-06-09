@@ -1,20 +1,15 @@
 package se.kth.iv1350.fantasticpos.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Shows the total revenue.
  */
 public abstract class AbstractTotalRevenue implements SaleObserver {
-    //private final List<Double> revenue;
     private Double totalRevenue = 0.0;
 
     /**
-     * Creates a new instance and creates a new ArrayList.
+     * Creates a new instance.
      */
     protected AbstractTotalRevenue() {
-        //revenue = new ArrayList<>();
     }
 
     /**
@@ -29,12 +24,6 @@ public abstract class AbstractTotalRevenue implements SaleObserver {
     }
 
     private void calculateTotalRevenue(double payment)  {
-        /*
-        revenue.add(payment);
-        for (Double income : revenue) {
-            this.totalRevenue = income + this.totalRevenue;
-        }
-         */
         this.totalRevenue += payment;
     }
 

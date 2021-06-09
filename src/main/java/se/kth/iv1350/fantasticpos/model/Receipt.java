@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Receipt {
     private final Sale currentSale;
-    private List<ItemsInCart> items;
+    private final List<ItemsInCart> items;
 
     /**
      * Creates a new instance.
@@ -30,6 +30,7 @@ public class Receipt {
         return receiptCleanFormat();
     }
 
+    //Groups of private methods to create receipt
     private String createTime() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
         LocalDateTime timeOfSale = LocalDateTime.now();
@@ -51,19 +52,19 @@ public class Receipt {
         builder.append("\nReceipt follows...");
         endSection(builder);
 
-        builder.append(createNewReceiptLine());
+        builder.append(createDecorLine('='));
         endSection(builder);
 
-        String storeinfo = createStoreInfo();
-        builder.append(storeinfo);
+        String storeInfo = createStoreInfo();
+        builder.append(storeInfo);
 
-        builder.append(createDottedLine());
+        builder.append(createDecorLine('.'));
         endSection(builder);
 
         builder.append(createItemsTitle());
         endSection(builder);
 
-        builder.append(createDottedLine());
+        builder.append(createDecorLine('.'));
         endSection(builder);
 
         builder.append(createItemsInCart());
@@ -72,7 +73,7 @@ public class Receipt {
         builder.append(createTotalPriceInfo());
         endSection(builder);
 
-        builder.append(createDottedLine());
+        builder.append(createDecorLine('.'));
         endSection(builder);
 
         builder.append(createAmountPaidInfo());
@@ -87,7 +88,7 @@ public class Receipt {
         builder.append(createBarCode());
         endSection(builder);
 
-        builder.append(createNewReceiptLine());
+        builder.append(createDecorLine('='));
         endSection(builder);
 
         return builder.toString();
@@ -130,39 +131,40 @@ public class Receipt {
 
     private String createStoreInfo() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n             Paulina Huang's Store");
+        builder.append(String.format("\n%-12s %-35s", "", "Paulina Huang's Store"));
         endSection(builder);
 
-        builder.append("        KTH Royal Institute of Technology");
+        builder.append(String.format("%-6s %-40s", "", "KTH Royal Institute of Technology"));
         endSection(builder);
 
-        appendLine(builder, "              " + createTime() + "    ");
+        appendLine(builder, String.format("%-13s %-34s", "", createTime()));
         endSection(builder);
 
         return builder.toString();
     }
 
     private String createBarCode() {
-        return "            || |||||| ||| |||||||| |\n" +
-               "            || |||||| ||| |||||||| |\n";
+        StringBuilder barcode = new StringBuilder();
+        barcode.append(String.format("%-12s %-35s", "", "|| |||||| ||| |||||| |\n"));
+        return barcode.toString();
     }
 
-    private String createNewReceiptLine() {
-        return "===============================================";
-    }
-
-    private String createDottedLine() {
-        return "...............................................";
+    private String createDecorLine (char frameType) {
+        StringBuilder frame = new StringBuilder();
+        for(int i = 1; i < 48; i++) {
+            frame.append(frameType);
+        }
+        return frame.toString();
     }
 
     private String createItemsTitle() {
-        return String.format("%-15s %10s %20s", "Item", "Quantity", "Price(SEK)");
+        return String.format("%-15s %11s %19s", "Item", "Quantity", "Price(SEK)");
     }
 
     private String createItemsInCart() {
         StringBuilder builder = new StringBuilder();
         for (ItemsInCart item : items) {
-            builder.append(String.format("%-15s %10s %20s", item.getName(), item.getItemQuantity(),
+            builder.append(String.format("%-15s %8s %22s", item.getName(), item.getItemQuantity(),
                     Math.round(item.getPrice())));
             endSection(builder);
         }
